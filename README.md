@@ -110,7 +110,7 @@ sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmwar
 ```
 ## 安装Cuda、Cudnn、英伟达驱动
 
-注意⚠️ 3090只支持455驱动
+注意⚠️ 3090只支持455及以上驱动
 
 ### Cuda、驱动推荐安装方式
 > 1、在官网下载需要版本的Cuda文件（`*.run`）\
