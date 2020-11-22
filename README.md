@@ -44,6 +44,7 @@ https://netdevops.me/2017/installing-xrdp-0.9.1-on-ubuntu-16.04-xenial/
 
 #### 18.04安装：
 ##### 方法一（推荐）
+参考：https://blog.csdn.net/fancyboyhou/article/details/105170696
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
 unzip xrdp-installer-1.1.zip
