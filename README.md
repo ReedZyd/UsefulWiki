@@ -110,7 +110,10 @@ sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmwar
 ```
 ## 安装Cuda、Cudnn、英伟达驱动
 
-注意⚠️ 3090只支持455及以上驱动
+注意⚠️ 3090只支持455及以上驱动，建议使用pytorch时安装cuda11.0，455驱动。
+```shell
+pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
 
 ### Cuda、驱动推荐安装方式
 > 1、在官网下载需要版本的Cuda文件（`*.run`）\
