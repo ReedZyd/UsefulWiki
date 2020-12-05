@@ -42,6 +42,14 @@ sudo reboot
 全灰屏，鼠标是个叉，可能是因为xrdp版本低，参考：
 https://netdevops.me/2017/installing-xrdp-0.9.1-on-ubuntu-16.04-xenial/
 
+vscode通过xrdp远程桌面打开在远程桌面显示，参考：
+https://github.com/Microsoft/vscode/issues/3451#issuecomment-227197582
+```shell
+mkdir ~/lib # make a copy of the relevant library
+cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 ~/lib
+sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
+LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
+```
 #### 18.04安装：
 ##### 方法一（推荐）
 参考：https://blog.csdn.net/fancyboyhou/article/details/105170696
@@ -116,7 +124,7 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 ```
 
 ### Cuda、驱动推荐安装方式
-> 1、在官网下载需要版本的Cuda文件（`*.run`）\
+> 1、在官网下载需要版本的Cuda文件（`*.run`），18.04系统运行`*.run`文件前可能需要运行`sudo apt-get install build_essential`命令以安装gcc、g++、make等软件 \
 > 2、禁用nouveau第三方驱动，进入命令行界面，禁用图形界面（具体操作见驱动安装部分）\
 > 3、运行`.run`文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）\
 > 4、重启图形界面（具体操作见驱动安装部分）
