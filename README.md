@@ -208,6 +208,7 @@ source ~/.bashrc
 ```shell
 sudo adduser xxx
 sudo vim /etc/sudoers #添加root权限,添加：xxx ALL=(ALL) ALL
+sudo usermod -G sudo username #给用户添加sudo权限
 ```
 ### 关联原有用户
 ```shell
