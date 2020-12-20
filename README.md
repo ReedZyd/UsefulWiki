@@ -270,6 +270,10 @@ vim /etc/fstab
 
 `sudo dpkg -i xxx.deb` 若缺少依赖：sudo apt install -f
 
+### 安装ToDesk
+
+https://update.todesk.com/todeskBeta_1.1.0c.deb
+
 ### 安装mujoco
 
 - 安装： Follow https://github.com/openai/mujoco-py
