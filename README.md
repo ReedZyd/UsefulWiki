@@ -56,8 +56,8 @@ LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
 unzip xrdp-installer-1.1.zip
-chmod +x 777 ./xrdp-installer-1.1.sh 
-sudo ./xrdp-installer-1.1.sh 
+sudo chmod 777 ./xrdp-installer-1.1.sh 
+./xrdp-installer-1.1.sh 
 ```
 
 1、如已经安装过XRDP，请先删除后再执行安装脚本。
@@ -129,6 +129,8 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 > 3、运行`.run`文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）\
 > 4、重启图形界面（具体操作见驱动安装部分）
 > 5、添加环境变量（具体操作见安装Cuda 10.1部分）
+
+如果安装不上：https://blog.csdn.net/missyoudaisy/article/details/104432746
 
 ### 安装Cudnn10.0
 有时候需要改名： solitairetheme8-->tgz
