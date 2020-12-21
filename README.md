@@ -104,7 +104,7 @@ network:
 			gateway4: 192.168.199.1 #设置网关
 			nameservers:
 				addresses: [114.114.114.114, 8.8.8.8] #设置DNS
-			version: 2
+	version: 2
 ```
 `sudo netplan apply`
 
