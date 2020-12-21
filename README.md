@@ -300,7 +300,7 @@ cd ~/.mujoco/mjpro150/bin
 ### 重装系统完成后，黑屏左上角光标闪烁：
 [https://blog.csdn.net/chengyq116/article/details/102575221](https://blog.csdn.net/chengyq116/article/details/102575221)
 
-#### 1、Advanced options for Ubuntu(开机时按Esc)选择其他内核版本
+#### 1、Advanced options for Ubuntu(开机时按Shift)选择其他内核版本
 #### 2、禁用nouveau驱动
 ```shell
 sudo gedit /etc/modprobe.d/blacklist.conf #确认最后一行添加：blacklist nouveau
