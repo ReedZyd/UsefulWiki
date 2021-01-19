@@ -62,7 +62,7 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 
 1、如已经安装过XRDP，请先删除后再执行安装脚本。
 ```shell
-sudo ./xrdp-installer-1.1.sh -r # 删除xrdp软件包
+./xrdp-installer-1.1.sh -r # 删除xrdp软件包
 ```
 
 2、用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
@@ -124,7 +124,7 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 ```
 
 ### Cuda、驱动推荐安装方式
-> 1、在官网下载需要版本的Cuda文件（`*.run`），18.04系统运行`*.run`文件前可能需要运行`sudo apt-get install build_essential`命令以安装gcc、g++、make等软件 \
+> 1、在官网下载需要版本的Cuda文件（`*.run`），18.04系统运行`*.run`文件前可能需要运行`sudo apt-get install build-essential`命令以安装gcc、g++、make等软件 \
 > 2、禁用nouveau第三方驱动，进入命令行界面，禁用图形界面（具体操作见驱动安装部分）\
 > 3、运行`.run`文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）\
 > 4、重启图形界面（具体操作见驱动安装部分）
