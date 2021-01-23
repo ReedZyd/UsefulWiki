@@ -230,6 +230,8 @@ source ~/.bashrc
 ```shell
 pip install pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 推荐
+pip config set global.index-url  http://mirrors.aliyun.com/pypi/simple/
 ```
 
 ### apt换源
