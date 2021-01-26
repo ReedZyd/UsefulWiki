@@ -248,6 +248,16 @@ sudo apt update
 sudo apt upgrade
 ```
 
+### docker换源
+修改/etc/docker/daemon.json并重启docker
+```shell
+# cat /etc/docker/daemon.json 
+{
+  "registry-mirrors": ["https://75oltije.mirror.aliyuncs.com"]
+}
+sudo systemctl restart docker
+```
+
 ### 配置tmux、vim
 
 ```shell
