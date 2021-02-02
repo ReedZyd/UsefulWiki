@@ -1,6 +1,7 @@
 # Ubuntu装机
 
-## 制作启动盘
+## 系统安装
+### 制作启动盘
 
 镜像源：https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/16.04/
 
@@ -9,7 +10,7 @@ ps：最好上官网下载
 下载：ubuntu-16.04.6-desktop-amd64.iso /server版需要自己装ubuntu-desktop
 使用UltraISO：打开iso文件—启动—写入硬盘映像
 
-## 分区
+### 分区
 下载时选择something else, 分区如下（500G+2T）
 > 512M efi \
 > 460G / \
@@ -77,8 +78,9 @@ chmod 777 Install-xrdp-3.0.sh
 没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-### 配置
-#### 全新机器需要设置端口转发，eg: hiwifi.com 互联网-超级端口转发
+### 网络配置
+#### 全新机器
+设置端口转发，eg: hiwifi.com 互联网-超级端口转发
 #### 不是新机器设置静态ip
 ##### Ubuntu16.04
 - 1、查询网络接口的名字
@@ -124,14 +126,149 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 ```
 
 ### Cuda、驱动推荐安装方式
-> 1、在官网下载需要版本的Cuda文件（`*.run`），18.04系统运行`*.run`文件前可能需要运行`sudo apt-get install build-essential`命令以安装gcc、g++、make等软件 \
-> 2、禁用nouveau第三方驱动，进入命令行界面，禁用图形界面（具体操作见驱动安装部分）\
-> 3、运行`.run`文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）\
-> 4、重启图形界面（具体操作见驱动安装部分）
-> 5、添加环境变量（具体操作见安装Cuda 10.1部分）
 
-如果安装不上：https://blog.csdn.net/missyoudaisy/article/details/104432746
+#### 快速安装驱动：重启后驱动掉了
+1、禁用图形界面
 
+```bash
+sudo service lightdm stop # 关闭桌面 
+
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default multi-user.target # 关闭桌面
+```
+
+2、运行.run文件，选择安装驱动等（Sample、Demo、Document不需要安装）
+3、重启图形界面
+
+开启图形界面
+
+```bash
+sudo service lightdm start # 开启桌面
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default graphical.target # 开启桌面
+```
+
+#### Cuda 驱动一键安装（推荐）
+1、在官网下载需要版本的Cuda文件（*.run）
+2、禁用nouveau第三方驱动
+
+`sudo gedit /etc/modprobe.d/blacklist.conf`
+
+在最后一行添加：blacklist nouveau
+
+```bash
+sudo update-initramfs -u # 对所有内核版本操作 加 -k all
+sudo reboot
+```
+
+3、进入命令行界面并禁用图形界面
+
+执行命令：lsmod | grep nouveau 查看是否禁用,无反应则已禁用
+禁用图形界面：
+
+```bash
+sudo service lightdm stop # 关闭桌面 
+
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default multi-user.target # 关闭桌面
+```
+
+4、18.04系统运行*.run文件前可能需要运行sudo apt-get install build-essential命令以安装gcc、g++、make等软件 
+
+5、运行.run文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）
+6、重启图形界面
+
+开启图形界面
+
+```bash
+sudo service lightdm start # 开启桌面
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default graphical.target # 开启桌面
+```
+
+7、添加环境变量
+
+```bash
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export CUDA_HOME=/usr/local/cuda
+```
+
+```bash
+source ~/.bashrc
+```
+
+如果安装不上：[https://blog.csdn.net/missyoudaisy/article/details/104432746](https://blog.csdn.net/missyoudaisy/article/details/104432746)
+
+#### 其它安装（不推荐，只作参考）
+##### 驱动安装
+###### 1、禁用nouveau第三方驱动
+`sudo gedit /etc/modprobe.d/blacklist.conf`
+
+在最后一行添加：blacklist nouveau
+```shell
+sudo update-initramfs -u # 对所有内核版本操作 加 -k all
+sudo reboot
+```
+###### 2、重启后按Ctrl+Alt+F1 进入命令行界面
+执行命令：lsmod | grep nouveau 查看是否禁用,无反应则已禁用
+禁用图形界面：
+```shell
+sudo service lightdm stop # 关闭桌面 
+sudo service lightdm start # 开启桌面
+```
+或（未装桌面管理器时）：
+```shell
+sudo systemctl set-default multi-user.target # 关闭桌面
+sudo systemctl set-default graphical.target # 开启桌面
+```
+
+###### 3、安装驱动
+```shell
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+ubuntu-drivers devices # 查询所有ubuntu推荐的驱动
+sudo apt-get install nvidia-430
+```
+###### 4、重启图形界面，查看安装
+```shell
+sudo service lightdm start
+watch -n 0.1 -d nvidia-smi #查看显卡温度 不跑程序时30-50C均可 刚装好驱动时会热一点 多等一会儿
+```
+##### 安装cuda10.1 （10.0兼容性不好）
+下载`.deb`文件：
+```shell
+sudo dpkg -i xxx
+sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub #见上条运行结果
+sudo apt-get update
+sudo apt-get install cuda
+sudo gedit ~/.bashrc
+```
+添加环境变量：
+```
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export CUDA_HOME=/usr/local/cuda
+```
+```shell
+source ~/.bashrc
+```
 ### 安装Cudnn10.0
 有时候需要改名： solitairetheme8-->tgz
 ```shell
@@ -152,59 +289,7 @@ find / -name cudnn_version.h 2>&1 | grep -v "Permission denied" # 查找cudnn_ve
 cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # 路径需要替换为上述命令搜索到的文件路径
 ```
 
-### 其它安装（不推荐，只作参考）
-#### 驱动安装
-##### 1、禁用nouveau第三方驱动
-`sudo gedit /etc/modprobe.d/blacklist.conf`
 
-在最后一行添加：blacklist nouveau
-```shell
-sudo update-initramfs -u # 对所有内核版本操作 加 -k all
-sudo reboot
-```
-##### 2、重启后按Ctrl+Alt+F1 进入命令行界面
-执行命令：lsmod | grep nouveau 查看是否禁用,无反应则已禁用
-禁用图形界面：
-```shell
-sudo service lightdm stop # 关闭桌面 
-sudo service lightdm start # 开启桌面
-```
-或（未装桌面管理器时）：
-```shell
-sudo systemctl set-default multi-user.target # 关闭桌面
-sudo systemctl set-default graphical.target # 开启桌面
-```
-
-##### 3、安装驱动
-```shell
-sudo add-apt-repository ppa:graphics-drivers/ppa
-sudo apt-get update
-ubuntu-drivers devices # 查询所有ubuntu推荐的驱动
-sudo apt-get install nvidia-430
-```
-##### 4、重启图形界面，查看安装
-```shell
-sudo service lightdm start
-watch -n 0.1 -d nvidia-smi #查看显卡温度 不跑程序时30-50C均可 刚装好驱动时会热一点 多等一会儿
-```
-#### 安装cuda10.1 （10.0兼容性不好）
-下载`.deb`文件：
-```shell
-sudo dpkg -i xxx
-sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub #见上条运行结果
-sudo apt-get update
-sudo apt-get install cuda
-sudo gedit ~/.bashrc
-```
-添加环境变量：
-```
-export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export CUDA_HOME=/usr/local/cuda
-```
-```shell
-source ~/.bashrc
-```
 ## 添加用户
 ### 添加新用户
 ```shell
@@ -219,13 +304,7 @@ sudo chown -R xxx:xxx /home/xxx
 sudo usermod -aG sudo xxx #添加sudo权限
 sudo passwd xxx
 ```
-## 其他安装（可选）
-### 安装anaconda3（导入设置）
-#### 配置
-```shell
-echo 'export PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
+## 换源
 ### pip换源
 ```shell
 pip install pip -U
@@ -258,16 +337,7 @@ sudo apt upgrade
 sudo systemctl restart docker
 ```
 
-### 配置tmux、vim
-
-```shell
-sudo apt-get install tmux
-sudo apt-get install vim
-sudo apt-get install git
-sh <(curl https://j.mp/spf13-vim3 -L) # 推荐配置，容易连不上，多试几次
-```
-
-### 硬盘挂载
+## 硬盘挂载
 
 ```shell
 sudo fdisk -l #查看可挂载的磁盘都有哪些
@@ -279,6 +349,23 @@ vim /etc/fstab
 ```
 添加到最后一行：UUID=*************  /DATA  ext4  defaults  0  1 
 (ls -l /dev/disk/by-uuid | grep sda查看UUID)
+
+## 其他安装（可选）
+### 安装anaconda3（导入设置）
+#### 配置
+```shell
+echo 'export PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 配置tmux、vim
+
+```shell
+sudo apt-get install tmux
+sudo apt-get install vim
+sudo apt-get install git
+sh <(curl https://j.mp/spf13-vim3 -L) # 推荐配置，容易连不上，多试几次
+```
 
 ### 安装teamviewer
 
