@@ -78,11 +78,11 @@ chmod 777 Install-xrdp-3.0.sh
 没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-### 网络配置
-#### 全新机器
+## 网络配置
+### 全新机器
 设置端口转发，eg: hiwifi.com 互联网-超级端口转发
-#### 不是新机器设置静态ip
-##### Ubuntu16.04
+### 不是新机器设置静态ip
+#### Ubuntu16.04
 - 1、查询网络接口的名字
 打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
 - 2、打开修改文件
@@ -96,7 +96,7 @@ chmod 777 Install-xrdp-3.0.sh
 	> gateway 192.168.199.1 // 设置网关  
 	> dns-nameservers 114.114.114.114 // 设置dns服务器地址
 - 3、sudo reboot
-##### Ubuntu18.04
+#### Ubuntu18.04
 `sudo vim /etc/netplan/*.yaml`
 ```
 network:
@@ -110,10 +110,10 @@ network:
 ```
 `sudo netplan apply`
 
-#### 固件错误Possible missing firmware解决: 
-##### 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
+### 固件错误Possible missing firmware解决: 
+#### 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
 https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/
-##### 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
+#### 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
 ```shell
 cd /lib/firmware/rtl_nic/
 sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/rtl8125a-3.fw
