@@ -39,6 +39,10 @@
  7、回到Linux Host Computer，输入账号密码，开始安装Cuda等软件。
  
 NOTE!!!
+* 注意NVIDIA的板子是ARM架构，安装一些软件时要选择合适的安装包。
+ * 没有ARM架构的安装包：西游、搜狗拼音
+ * 最新的可以支持ARM：anaconda
+ * 有ARM安装包：google
 * 默认选择安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
  ```bash
  export CUDA_HOME=/usr/local/cuda-10.2
@@ -48,7 +52,8 @@ NOTE!!!
  * Xavier不需要安装驱动，用不了nvidia-smi
  * 最新的anaconda可以使用了，但没必要！刷机后自带python2.7、python3.6，需要自己安装pip3
 
-### 安装pip、torch等
+### 安装pip、torch、其他pypi三方库等
+Note!!! 建议直接安装pip3和其他三方库，不要用anaconda
 #### 下载pip3：
 ```shell
 sudo apt-get install libopenblas-base libopenmpi-dev python3-pip
@@ -67,8 +72,32 @@ python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
 #### 其他pypi三方库
-大部分直接用pip3安装即可
-* gym常见Pillow报错，解决方法同上
+大部分直接用pip3安装即可，常见Pillow报错，解决方法同上
+
+### 安装ros和部分ros包
+#### ros：
+按照[官方教程](https://www.elinux.org/Jetson_Zoo#ROS)安装：
+ ```shell
+ # install ROS Melodic
+ sudo apt-add-repository universe
+ sudo apt-add-repository multiverse
+ sudo apt-add-repository restricted
+
+ # add ROS repository to apt sources
+ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+ # install ROS Base
+ sudo apt-get update
+ sudo apt-get install ros-melodic-ros-base
+
+ # add ROS paths to environment
+ sudo sh -c 'echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc'
+ ```
+建议ros包用源码安装，不知道为什么apt安装经常出错
+#### 安装cv2_bridge
+Note!!!
+注意如果要用python3，编译的时候要手动配置，以下以手动编译与python3兼容的cv2_bridge为例
+
 
 #### google-pinyin
 sudo apt-get install fcitx fcitx-googlepinyin -y
