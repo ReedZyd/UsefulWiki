@@ -95,8 +95,7 @@ python3 -m pip install --upgrade Pillow
  ```
 建议ros包用源码安装，不知道为什么apt安装经常出错
 #### 安装cv2_bridge
-Note!!!
-注意如果要用python3，编译的时候要手动配置，以下以手动编译与python3兼容的cv2_bridge为例
+Note!!!注意如果要用python3，编译的时候要手动配置，以下以手动编译与**python3**、**opencv4**兼容的cv2_bridge为例
 
 
 #### google-pinyin
