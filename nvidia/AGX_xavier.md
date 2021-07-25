@@ -39,7 +39,7 @@
  7、回到Linux Host Computer，输入账号密码，开始安装Cuda等软件。
  
 NOTE!!!
-会自动安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
+默认选择安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
 
 https://www.elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29
 
