@@ -123,10 +123,11 @@ cd vision_opencv/
 git checkout 1.13.0
 ```
 
-* [配置opencv要求](https://github.com/ros-perception/vision_opencv/issues/272#issuecomment-471311300)
+* 配置opencv4要求，一般默认3
+https://github.com/ros-perception/vision_opencv/issues/272#issuecomment-471311300
 1. Add set (CMAKE_CXX_STANDARD 11) to your top level cmake
-2. `cv_bridge/src CMakeLists.txt`35行改为`if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)`
-3. `cv_bridge/src/module_opencv3.cpp`中改两处：1）`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`；`bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
+2. `vision_opencv/cv_bridge/src/CMakeLists.txt`35行改为`if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)`
+3. `vision_opencv/cv_bridge/src/module_opencv3.cpp`中改两处：1）`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`；`bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
 
 * 编译
 ```shell
