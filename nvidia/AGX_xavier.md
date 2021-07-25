@@ -40,7 +40,11 @@
  
 NOTE!!!
 默认选择安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
-
+ ```bash
+ export CUDA_HOME=/usr/local/cuda-10.2
+ export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
+ export PATH=/usr/local/cuda-10.2/bin:$PATH
+ ```
 https://www.elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29
 
 #### google-pinyin
