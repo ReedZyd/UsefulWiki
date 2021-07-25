@@ -97,9 +97,46 @@ python3 -m pip install --upgrade Pillow
 建议ros包用源码安装，不知道为什么apt安装经常出错
 #### 安装cv2_bridge
 Note!!!注意如果要用python3，编译的时候要手动配置，以下以手动编译与**python3**、**opencv4**兼容的cv2_bridge为例
+* 准备
+```shell
+# 安装依赖
+sudo apt-get install python-catkin-tools python3-dev python3-catkin-pkg-modules python3-numpy python3-yaml ros-melodic-cv-bridge
+# 创建工作空间
+mkdir -p ~/catkin_ws/src
+# 初始化工作空间
+cd ~/catkin_ws && catkin init
+```
+* 配置python3
+```shell
+# 设置cmake变量（以python3.6为例），注意最后一项（x86架构：x86_64_linux-gnu文件夹，aarch64架构：aarch64-linux-gnu文件夹）
+catkin config -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/aarch64-linux-gnu/libpython3.6m.so
+catkin config --install
+```
+* 下载源码
+```
+cd ~/catkin_ws/src
+git clone https://github.com/ros-perception/vision_opencv.git
+# 查找cv_bridge版本
+apt-cache show ros-melodic-cv-bridge | grep Version
+# checkout指定版本（以1.13.0为例）
+cd vision_opencv/
+git checkout 1.13.0
+```
+* 配置opencv要求
+- Add set (CMAKE_CXX_STANDARD 11) to your top level cmake
+- In cv_bridge/src CMakeLists.txt line 35 change to if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)
+- In cv_bridge/src/module_opencv3.cpp change signature of two functions 
+- 1. `UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`
+改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`
+- 2. `bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
+* 编译
+```shell
+catkin build
+# 将功能包加到扩展环境中，可以选择每次手动source，也可以把source添加到~/.bashrc中
+source install/setup.bash --extend
+```
 
-
-#### google-pinyin
+#### google-pinycd ~ && mkdir cv_bridge_wsin
 sudo apt-get install fcitx fcitx-googlepinyin -y
 https://blog.csdn.net/u013554213/article/details/82429113
 ### realsense camera 
