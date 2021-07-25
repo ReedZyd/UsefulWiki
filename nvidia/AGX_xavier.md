@@ -122,13 +122,12 @@ apt-cache show ros-melodic-cv-bridge | grep Version
 cd vision_opencv/
 git checkout 1.13.0
 ```
+
 * 配置opencv要求
-- Add set (CMAKE_CXX_STANDARD 11) to your top level cmake
-- In cv_bridge/src CMakeLists.txt line 35 change to if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)
-- In cv_bridge/src/module_opencv3.cpp change signature of two functions 
-- 1. `UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`
-改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`
-- 2. `bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
+1. Add set (CMAKE_CXX_STANDARD 11) to your top level cmake
+2. `cv_bridge/src CMakeLists.txt`35行改为`if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)`
+3. `cv_bridge/src/module_opencv3.cpp`中改两处：1）`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`；`bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
+
 * 编译
 ```shell
 catkin build
