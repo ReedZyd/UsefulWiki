@@ -129,8 +129,8 @@ https://github.com/ros-perception/vision_opencv/issues/272#issuecomment-47131130
 2. `vision_opencv/cv_bridge/CMakeLists.txt`16行改为`find_package(OpenCV 4 REQUIRED`
 3. `vision_opencv/cv_bridge/src/CMakeLists.txt`35行改为`if (OpenCV_VERSION_MAJOR VERSION_EQUAL 4)`
 4. `vision_opencv/cv_bridge/src/module_opencv3.cpp`中改两处：
-4.1 `UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`
-4.2 `bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
+1) `UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const`改为`UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, AccessFlag flags, UMatUsageFlags usageFlags) const`
+2) `bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const`改为`bool allocate(UMatData* u, AccessFlag accessFlags, UMatUsageFlags usageFlags) const`
 
 * 编译
 ```shell
