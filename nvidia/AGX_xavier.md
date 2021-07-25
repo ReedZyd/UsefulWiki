@@ -51,6 +51,7 @@ NOTE!!!
  ```
  * Xavier不需要安装驱动，用不了nvidia-smi
  * 最新的anaconda可以使用了，但没必要！刷机后自带python2.7、python3.6，需要自己安装pip3
+ * 默认自带opencv4(2021.07.25)
 
 ### 安装pip、torch、其他pypi三方库等
 Note!!! 建议直接安装pip3和其他三方库，不要用anaconda
