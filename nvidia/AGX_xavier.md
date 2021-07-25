@@ -1,6 +1,6 @@
 ## AGX_xavier
 
-### Install Jetson Software with SDK Manager
+### 刷机
 
 1、准备一台Ubuntu Linux x64 Version 18.04 or 16.04电脑（Linux Host computer），需与Xavier在同一局域网下，并下载安装[NVIDIA SDK Manager](https://developer.nvidia.com/embedded/downloads#?search=NVIDIA%20SDK%20Manager)。
 
@@ -39,13 +39,36 @@
  7、回到Linux Host Computer，输入账号密码，开始安装Cuda等软件。
  
 NOTE!!!
-默认选择安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
+* 默认选择安装cuda，安装完成后只需要在`~\.bashrc`配置环境变量即可，即添加：
  ```bash
  export CUDA_HOME=/usr/local/cuda-10.2
  export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
  export PATH=/usr/local/cuda-10.2/bin:$PATH
  ```
-https://www.elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29
+ * Xavier不需要安装驱动，用不了nvidia-smi
+ * 最新的anaconda可以使用了，但没必要！刷机后自带python2.7、python3.6，需要自己安装pip3
+
+### 安装pip、torch等
+#### 下载pip3：
+```shell
+sudo apt-get install libopenblas-base libopenmpi-dev python3-pip
+```
+#### 安装torch
+注意torch必须按xavier[官方教程](https://www.elinux.org/Jetson_Zoo)安装:
+* 从官方教程网站上下载torch-1.6.0-cp36-cp36m-linux_aarch64.whl
+* 安装：
+```shell
+pip3 install Cython
+pip3 install numpy torch-1.6.0-cp36-cp36m-linux_aarch64.whl
+```
+* 常遇到Pillow编译不了，需要按照[Pillow官网](https://pillow.readthedocs.io/en/stable/installation.html)手动安装：
+```shell
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade Pillow
+```
+#### 其他pypi三方库
+大部分直接用pip3安装即可
+* gym常见Pillow报错，解决方法同上
 
 #### google-pinyin
 sudo apt-get install fcitx fcitx-googlepinyin -y
