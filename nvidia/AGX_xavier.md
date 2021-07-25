@@ -1,6 +1,6 @@
-## AGX_xavier
+# AGX_xavier
 
-### 刷机
+## 刷机
 
 1、准备一台Ubuntu Linux x64 Version 18.04 or 16.04电脑（Linux Host computer），需与Xavier在同一局域网下，并下载安装[NVIDIA SDK Manager](https://developer.nvidia.com/embedded/downloads#?search=NVIDIA%20SDK%20Manager)。
 
@@ -53,13 +53,13 @@ NOTE!!!
  * 最新的anaconda可以使用了，但没必要！刷机后自带python2.7、python3.6，需要自己安装pip3
  * 默认自带opencv4(2021.07.25)
 
-### 安装pip、torch、其他pypi三方库等
+## 安装pip、torch、其他pypi三方库等
 Note!!! 建议直接安装pip3和其他三方库，不要用anaconda
-#### 下载pip3：
+### 下载pip3：
 ```shell
 sudo apt-get install libopenblas-base libopenmpi-dev python3-pip
 ```
-#### 安装torch
+### 安装torch
 注意torch必须按xavier[官方教程](https://www.elinux.org/Jetson_Zoo)安装:
 * 从官方教程网站上下载torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 * 安装：
@@ -72,11 +72,11 @@ pip3 install numpy torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
-#### 其他pypi三方库
+### 其他pypi三方库
 大部分直接用pip3安装即可，常见Pillow报错，解决方法同上
 
-### 安装ros和部分ros包
-#### ros：
+## 安装ros和部分ros包
+### ros：
 按照[官方教程](https://www.elinux.org/Jetson_Zoo#ROS)安装：
  ```shell
  # install ROS Melodic
@@ -95,7 +95,7 @@ python3 -m pip install --upgrade Pillow
  sudo sh -c 'echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc'
  ```
 建议ros包用源码安装，不知道为什么apt安装经常出错
-#### 安装cv2_bridge
+### 安装cv2_bridge
 Note!!!注意如果要用python3，编译的时候要手动配置，以下以手动编译与**python3**、**opencv4**兼容的cv2_bridge为例
 * 准备
 ```shell
@@ -135,7 +135,7 @@ catkin build
 source install/setup.bash --extend
 ```
 
-#### google-pinycd ~ && mkdir cv_bridge_wsin
+#### google-pinyin
 sudo apt-get install fcitx fcitx-googlepinyin -y
 https://blog.csdn.net/u013554213/article/details/82429113
 ### realsense camera 
