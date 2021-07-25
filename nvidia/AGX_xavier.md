@@ -38,7 +38,7 @@
   ```
  7、回到Linux Host Computer，输入账号密码，开始安装Cuda等软件。
  
-NOTE!!!
+**NOTE!!!**
 * 注意NVIDIA的板子是ARM架构，安装一些软件时要选择合适的安装包。
  * 没有ARM架构的安装包：西游、搜狗拼音
  * 最新的可以支持ARM：anaconda
@@ -54,7 +54,7 @@ NOTE!!!
  * 默认自带opencv4(2021.07.25)
 
 ## 安装pip、torch、其他pypi三方库等
-Note!!! 建议直接安装pip3和其他三方库，不要用anaconda
+**NOTE!!! 建议直接安装pip3和其他三方库，不要用anaconda**
 ### 下载pip3：
 ```shell
 sudo apt-get install libopenblas-base libopenmpi-dev python3-pip
@@ -73,10 +73,13 @@ python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
 ### 其他pypi三方库
+
 大部分直接用pip3安装即可，常见Pillow报错，解决方法同上
 
 ## 安装ros和部分ros包
-### ros：
+
+### ros
+
 按照[官方教程](https://www.elinux.org/Jetson_Zoo#ROS)安装：
  ```shell
  # install ROS Melodic
@@ -94,7 +97,8 @@ python3 -m pip install --upgrade Pillow
  # add ROS paths to environment
  sudo sh -c 'echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc'
  ```
-建议ros包用源码安装，不知道为什么apt安装经常出错
+**NOTE!!! 建议ros包用源码安装，不知道为什么apt安装经常出错**
+
 ### 安装cv2_bridge
 Note!!!注意如果要用python3，编译的时候要手动配置，以下以手动编译与**python3**、**opencv4**兼容的cv2_bridge为例
 * 准备
@@ -170,4 +174,14 @@ source ~/.bashrc
 ```shell
 roslaunch realsense2_camera rs_camera.launch
 ```
-
+* 常见问题1：
+ Could not find a package configuration file provided by XXX with any of the following names:...
+ 安装相应包即可：
+ ```shell
+ sudo apt-get install ros-melodic-XXX
+ ```
+* 常见问题2：
+ No module named 'em'
+ ```shell
+ pip3 install empy
+ ```
