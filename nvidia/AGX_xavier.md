@@ -140,8 +140,34 @@ catkin build
 source install/setup.bash --extend
 ```
 
-#### google-pinyin
-sudo apt-get install fcitx fcitx-googlepinyin -y
-https://blog.csdn.net/u013554213/article/details/82429113
-### realsense camera 
-https://github.com/IntelRealSense/realsense-ros
+### [realsense camera](https://github.com/IntelRealSense/realsense-ros)
+**以ubuntu18.04为例**
+* 安装sdk
+```shell
+sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo bionic main" -u
+sudo apt-get install librealsense2-utils
+sudo apt-get install librealsense2-dev
+# 验证sdk安装是否成功
+realsense-viewer
+* 安装ros包
+```shell
+cd ~/catkin_ws/src/
+git clone https://github.com/IntelRealSense/realsense-ros.git
+cd realsense-ros/
+git checkout `git tag | sort -V | grep -P "^2.\d+\.\d+" | tail -1`
+cd ..
+catkin_init_workspace
+cd ..
+# 编译
+catkin_make clean
+catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
+catkin_make install
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+* 发布节点
+```shell
+roslaunch realsense2_camera rs_camera.launch
+```
+
