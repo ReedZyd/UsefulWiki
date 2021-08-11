@@ -32,7 +32,7 @@ sudo service ssh status
 ### 安装远程桌面
 #### 16.04安装：
 ```shell
-sudo apt-get install xrdp  #安装xrdp 
+sudo apt-get install xrdp xfce4  #安装xrdp 
 sudo apt-get install xubuntu-desktop -f #安装xubuntu-desktop
 sudo vim /etc/xrdp/startwm.sh
 # 把最下面的test和exec两行注释掉，添加一行xfce4-session
