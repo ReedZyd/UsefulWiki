@@ -74,6 +74,8 @@ unzip install-xrdp-3.0.zip
 chmod 777 Install-xrdp-3.0.sh
 ./Install-xrdp-3.0.sh
 ```
+##### 方法三
+http://www.c-nergy.be/products.html
 
 没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
