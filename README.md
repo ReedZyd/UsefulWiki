@@ -20,6 +20,17 @@ ps：最好上官网下载
 如果没有efi选项，更换进入系统时选择的启动位置
 进入空系统后分辨率过低是正常现象，是由于未安装驱动所致。
 
+## 安装好看的zsh和spaceship
+https://github.com/spaceship-prompt/spaceship-prompt
+
+```shell
+sudo apt-get install zsh
+sudo apt-get install fonts-powerline
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+```
+在`~/.zshrc`中设置：`ZSH_THEME="spaceship"`
+
 ## 安装ssh和远程桌面
 ### 安装ssh
 
