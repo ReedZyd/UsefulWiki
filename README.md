@@ -1,4 +1,4 @@
-# Ubuntu装机
+# Quick start: configuration of a new computer in VsisLab
 
 ## System installation
 ### Start
@@ -10,8 +10,9 @@ ps：最好上官网下载
 下载：ubuntu-16.04.6-desktop-amd64.iso /server版需要自己装ubuntu-desktop
 使用UltraISO：打开iso文件—启动—写入硬盘映像
 
-### 分区
-下载时选择something else, 分区如下（500G+2T）
+### Disk Partition
+choose: `something else`
+eg (500G+2T):
 > 512M efi \
 > 460G / \
 > 5G /boot \
@@ -20,7 +21,7 @@ ps：最好上官网下载
 如果没有efi选项，更换进入系统时选择的启动位置
 进入空系统后分辨率过低是正常现象，是由于未安装驱动所致。
 
-## 安装好看的zsh和spaceship
+## zsh & spaceship
 https://github.com/spaceship-prompt/spaceship-prompt
 
 ```shell
@@ -31,8 +32,8 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 ```
 在`~/.zshrc`中设置：`ZSH_THEME="spaceship"`
 
-## 安装ssh和远程桌面
-### 安装ssh
+## ssh & remote-desktop
+### ssh
 
 ```shell
 sudo apt install openssh-server
@@ -40,8 +41,8 @@ sudo service ssh start
 sudo service ssh status
 ```
 
-### 安装远程桌面
-#### 16.04安装：
+### remote-desktop: xrdp
+#### Ubuntu 16.04：
 ```shell
 sudo apt-get install xrdp xfce4  #安装xrdp 
 sudo apt-get install xubuntu-desktop -f #安装xubuntu-desktop
@@ -62,9 +63,9 @@ cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 ~/lib
 sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
 LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
 ```
-#### 18.04安装：
-##### 方法一（推荐）
-参考：https://blog.csdn.net/fancyboyhou/article/details/105170696
+#### Ubuntu 18.04：
+##### Method No.1（Recommended）
+reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
 unzip xrdp-installer-1.1.zip
@@ -78,7 +79,7 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 ```
 
 2、用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
-##### 方法二
+##### Method No.2
 ```shell
 wget http://www.c-nergy.be/downloads/install-xrdp-3.0.zip
 unzip install-xrdp-3.0.zip
@@ -91,8 +92,8 @@ http://www.c-nergy.be/products.html
 没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-## 网络配置
-### 全新机器
+## network
+### for new machine
 设置端口转发，eg: hiwifi.com 互联网-超级端口转发
 ### 不是新机器设置静态ip
 #### Ubuntu16.04
