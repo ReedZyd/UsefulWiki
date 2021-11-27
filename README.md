@@ -1,7 +1,7 @@
 # Ubuntu装机
 
-## 系统安装
-### 制作启动盘
+## System installation
+### Start
 
 镜像源：https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/16.04/
 
