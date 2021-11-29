@@ -64,7 +64,7 @@ sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
 LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
 ```
 #### Ubuntu 18.04：
-##### Method No.1（Recommended）
+##### No.1（Recommended）
 reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
@@ -79,14 +79,14 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 ```
 
 2、用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
-##### Method No.2
+##### No.2
 ```shell
 wget http://www.c-nergy.be/downloads/install-xrdp-3.0.zip
 unzip install-xrdp-3.0.zip
 chmod 777 Install-xrdp-3.0.sh
 ./Install-xrdp-3.0.sh
 ```
-##### 方法三
+##### No.3
 http://www.c-nergy.be/products.html
 
 没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
