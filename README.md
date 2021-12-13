@@ -63,6 +63,13 @@ cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 ~/lib
 sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
 LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
 ```
+
+##### 一些问题
+http://www.c-nergy.be/products.html
+
+没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
+没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
+
 #### Ubuntu 18.04：
 ##### No.1（Recommended）
 reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
@@ -78,7 +85,7 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 ./xrdp-installer-1.1.sh -r # 删除xrdp软件包
 ```
 
-2、用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
+2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
 ##### No.2
 ```shell
 wget http://www.c-nergy.be/downloads/install-xrdp-3.0.zip
@@ -86,11 +93,7 @@ unzip install-xrdp-3.0.zip
 chmod 777 Install-xrdp-3.0.sh
 ./Install-xrdp-3.0.sh
 ```
-##### No.3
-http://www.c-nergy.be/products.html
 
-没有共享剪切板也是因为版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
-没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
 ## network
 ### for new machine
