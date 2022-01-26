@@ -74,7 +74,10 @@ python3 -m pip install --upgrade Pillow
 ```
 ### 其他pypi三方库
 
-大部分直接用pip3安装即可，常见Pillow报错，解决方法同上
+#### numba
+
+https://blog.csdn.net/qq_45779334/article/details/108640247 
+#### 大部分直接用pip3安装即可，常见Pillow报错，解决方法同上
 
 ## 安装ros和部分ros包
 
