@@ -10,6 +10,7 @@ ps：最好上官网下载
 下载：ubuntu-16.04.6-desktop-amd64.iso /server版需要自己装ubuntu-desktop
 使用UltraISO：打开iso文件—启动—写入硬盘映像
 
+
 ### 1.2 Disk Partition
 choose: `something else`
 eg (500G+2T):
