@@ -21,7 +21,7 @@ eg (500G+2T):
 如果没有efi选项，更换进入系统时选择的启动位置
 进入空系统后分辨率过低是正常现象，是由于未安装驱动所致。
 
-## zsh & spaceship
+## zsh & spaceship （配置terminal，可跳过）
 https://github.com/spaceship-prompt/spaceship-prompt
 
 ```shell
