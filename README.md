@@ -70,9 +70,10 @@ http://www.c-nergy.be/products.html
 没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-#### 3.2.2 Ubuntu 18.04 (2 Methods)：
-##### 3.2.2.1 No.1（Recommended）
-reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
+#### 3.2.2 Ubuntu 18.04：
+reference:
+- https://blog.csdn.net/fancyboyhou/article/details/105170696
+- https://c-nergy.be/products.html
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
 unzip xrdp-installer-1.1.zip
@@ -86,14 +87,6 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 ```
 
 2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
-##### 3.2.2.2 No.2
-```shell
-wget http://www.c-nergy.be/downloads/install-xrdp-3.0.zip
-unzip install-xrdp-3.0.zip
-chmod 777 Install-xrdp-3.0.sh
-./Install-xrdp-3.0.sh
-```
-
 
 ## 4 network
 ### 4.1 for new machine
