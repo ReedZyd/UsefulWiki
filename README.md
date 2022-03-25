@@ -1,7 +1,7 @@
 # Quick start: configuration of a new computer in VsisLab
 
-## System installation
-### Start
+## 1 System installation
+### 1.1 Start
 
 镜像源：https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/16.04/
 
@@ -10,7 +10,7 @@ ps：最好上官网下载
 下载：ubuntu-16.04.6-desktop-amd64.iso /server版需要自己装ubuntu-desktop
 使用UltraISO：打开iso文件—启动—写入硬盘映像
 
-### Disk Partition
+### 1.2 Disk Partition
 choose: `something else`
 eg (500G+2T):
 > 512M efi \
@@ -21,7 +21,7 @@ eg (500G+2T):
 如果没有efi选项，更换进入系统时选择的启动位置
 进入空系统后分辨率过低是正常现象，是由于未安装驱动所致。
 
-## zsh & spaceship （配置terminal，可跳过）
+## 2 zsh & spaceship （配置terminal，可跳过）
 https://github.com/spaceship-prompt/spaceship-prompt
 
 ```shell
@@ -32,8 +32,8 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 ```
 在`~/.zshrc`中设置：`ZSH_THEME="spaceship"`
 
-## ssh & remote-desktop
-### ssh
+## 3 ssh & remote-desktop
+### 3.1 ssh
 
 ```shell
 sudo apt install openssh-server
@@ -41,8 +41,8 @@ sudo service ssh start
 sudo service ssh status
 ```
 
-### remote-desktop: xrdp
-#### Ubuntu 16.04：
+### 3.2 remote-desktop: xrdp
+#### 3.2.1 Ubuntu 16.04：
 ```shell
 sudo apt-get install xrdp xfce4  #安装xrdp 
 sudo apt-get install xubuntu-desktop -f #安装xubuntu-desktop
@@ -64,14 +64,14 @@ sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
 LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
 ```
 
-##### 一些问题
+##### 3.2.1.1 一些问题
 http://www.c-nergy.be/products.html
 
 没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-#### Ubuntu 18.04 (2 Methods)：
-##### No.1（Recommended）
+#### 3.2.2 Ubuntu 18.04 (2 Methods)：
+##### 3.2.2.1 No.1（Recommended）
 reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
 ```shell
 wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
@@ -86,7 +86,7 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 ```
 
 2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
-##### No.2
+##### 3.2.2.2 No.2
 ```shell
 wget http://www.c-nergy.be/downloads/install-xrdp-3.0.zip
 unzip install-xrdp-3.0.zip
@@ -95,11 +95,11 @@ chmod 777 Install-xrdp-3.0.sh
 ```
 
 
-## network
-### for new machine
+## 4 network
+### 4.1 for new machine
 设置端口转发，eg: hiwifi.com 互联网-超级端口转发
-### 不是新机器设置静态ip
-#### Ubuntu16.04
+### 4.2 不是新机器设置静态ip
+#### 4.2.1 Ubuntu16.04
 - 1、查询网络接口的名字
 打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
 - 2、打开修改文件
@@ -113,7 +113,7 @@ chmod 777 Install-xrdp-3.0.sh
 	> gateway 192.168.199.1 // 设置网关  
 	> dns-nameservers 114.114.114.114 // 设置dns服务器地址
 - 3、sudo reboot
-#### Ubuntu18.04
+#### 4.2.2 Ubuntu18.04
 `sudo vim /etc/netplan/*.yaml`
 ```
 network:
@@ -127,24 +127,24 @@ network:
 ```
 `sudo netplan apply`
 
-### 固件错误Possible missing firmware解决: 
-#### 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
+### 4.3 固件错误Possible missing firmware解决: 
+#### 4.3.1 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
 https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/
-#### 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
+#### 4.3.2 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
 ```shell
 cd /lib/firmware/rtl_nic/
 sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/rtl8125a-3.fw
 ```
-## 安装Cuda、Cudnn、英伟达驱动
+## 5 安装Cuda、Cudnn、英伟达驱动
 
 注意⚠️ 3090只支持455及以上驱动，建议使用pytorch时安装cuda11.0，455驱动。
 ```shell
 pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
-### Cuda、驱动推荐安装方式
+### 5.1 Cuda、驱动推荐安装方式
 
-#### 快速安装驱动：重启后驱动掉了
+#### 5.1.1 快速安装驱动：重启后驱动掉了
 1、禁用图形界面
 
 ```bash
@@ -173,7 +173,7 @@ sudo service lightdm start # 开启桌面
 sudo systemctl set-default graphical.target # 开启桌面
 ```
 
-#### Cuda 驱动一键安装（推荐）
+#### 5.1.2 Cuda 驱动一键安装（推荐）
 1、在官网下载需要版本的Cuda文件（*.run）
 2、禁用nouveau第三方驱动
 
@@ -233,9 +233,9 @@ source ~/.bashrc
 
 如果安装不上：[https://blog.csdn.net/missyoudaisy/article/details/104432746](https://blog.csdn.net/missyoudaisy/article/details/104432746)
 
-#### 其它安装（不推荐，只作参考）
-##### 驱动安装
-###### 1、禁用nouveau第三方驱动
+#### 5.1.3 其它安装（不推荐，只作参考）
+##### 5.1.3.1 驱动安装
+###### 5.1.3.1.1 1、禁用nouveau第三方驱动
 `sudo gedit /etc/modprobe.d/blacklist.conf`
 
 在最后一行添加：blacklist nouveau
@@ -243,7 +243,7 @@ source ~/.bashrc
 sudo update-initramfs -u # 对所有内核版本操作 加 -k all
 sudo reboot
 ```
-###### 2、重启后按Ctrl+Alt+F1 进入命令行界面
+###### 5.1.3.1.2 2、重启后按Ctrl+Alt+F1 进入命令行界面
 执行命令：lsmod | grep nouveau 查看是否禁用,无反应则已禁用
 禁用图形界面：
 ```shell
@@ -256,19 +256,19 @@ sudo systemctl set-default multi-user.target # 关闭桌面
 sudo systemctl set-default graphical.target # 开启桌面
 ```
 
-###### 3、安装驱动
+###### 5.1.3.1.3 3、安装驱动
 ```shell
 sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt-get update
 ubuntu-drivers devices # 查询所有ubuntu推荐的驱动
 sudo apt-get install nvidia-430
 ```
-###### 4、重启图形界面，查看安装
+###### 5.1.3.1.4 4、重启图形界面，查看安装
 ```shell
 sudo service lightdm start
 watch -n 0.1 -d nvidia-smi #查看显卡温度 不跑程序时30-50C均可 刚装好驱动时会热一点 多等一会儿
 ```
-##### 安装cuda10.1 （10.0兼容性不好）
+##### 5.1.3.2 安装cuda10.1 （10.0兼容性不好）
 下载`.deb`文件：
 ```shell
 sudo dpkg -i xxx
@@ -286,7 +286,7 @@ export CUDA_HOME=/usr/local/cuda
 ```shell
 source ~/.bashrc
 ```
-### 安装Cudnn10.0
+### 5.2 安装Cudnn10.0
 有时候需要改名： solitairetheme8-->tgz
 ```shell
 tar -zxvf xxx.tgz 
@@ -307,22 +307,22 @@ cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # 路径需
 ```
 
 
-## 添加用户
-### 添加新用户
+## 6 添加用户
+### 6.1 添加新用户
 ```shell
 sudo adduser xxx
 sudo vim /etc/sudoers #添加root权限,添加：xxx ALL=(ALL) ALL
 sudo usermod -G sudo username #给用户添加sudo权限
 ```
-### 关联原有用户
+### 6.2 关联原有用户
 ```shell
 sudo useradd -d /home/xxx -s /bin/bash xxx
 sudo chown -R xxx:xxx /home/xxx
 sudo usermod -aG sudo xxx #添加sudo权限
 sudo passwd xxx
 ```
-## 换源
-### pip换源
+## 7 换源
+### 7.1 pip换源
 ```shell
 pip install pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -330,7 +330,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip config set global.index-url  http://mirrors.aliyun.com/pypi/simple/
 ```
 
-### apt换源
+### 7.2 apt换源
 ```shell
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo gedit /etc/apt/sources.list
@@ -344,7 +344,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-### docker换源
+### 7.3 docker换源
 修改/etc/docker/daemon.json并重启docker
 ```shell
 # cat /etc/docker/daemon.json 
@@ -354,7 +354,7 @@ sudo apt upgrade
 sudo systemctl restart docker
 ```
 
-## 硬盘挂载
+## 8 硬盘挂载
 
 ```shell
 sudo fdisk -l #查看可挂载的磁盘都有哪些
@@ -367,15 +367,15 @@ vim /etc/fstab
 添加到最后一行：UUID=*************  /DATA  ext4  defaults  0  1 
 (ls -l /dev/disk/by-uuid | grep sda查看UUID)
 
-## 其他安装（可选）
-### 安装anaconda3（导入设置）
-#### 配置
+## 9 其他安装（可选）
+### 9.1 安装anaconda3（导入设置）
+#### 9.1.1 配置
 ```shell
 echo 'export PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### 配置tmux、vim
+### 9.2 配置tmux、vim
 
 ```shell
 sudo apt-get install tmux
@@ -384,15 +384,15 @@ sudo apt-get install git
 sh <(curl https://j.mp/spf13-vim3 -L) # 推荐配置，容易连不上，多试几次
 ```
 
-### 安装teamviewer
+### 9.3 安装teamviewer
 
 `sudo dpkg -i xxx.deb` 若缺少依赖：sudo apt install -f
 
-### 安装ToDesk
+### 9.4 安装ToDesk
 
 https://update.todesk.com/todeskBeta_1.1.0c.deb
 
-### 安装mujoco
+### 9.5 安装mujoco
 
 - 安装： Follow https://github.com/openai/mujoco-py
 - 往~/.bashrc添加环境变量：
@@ -412,15 +412,15 @@ cd ~/.mujoco/mjpro150/bin
 ```
 - Install mujoco-py 参考 https://blog.csdn.net/zhangkzz/article/details/84574772
 
-## 常见问题：
-### 重装系统完成后，黑屏左上角光标闪烁：
+## 10 常见问题：
+### 10.1 重装系统完成后，黑屏左上角光标闪烁：
 [https://blog.csdn.net/chengyq116/article/details/102575221](https://blog.csdn.net/chengyq116/article/details/102575221)
 
-#### 1、Advanced options for Ubuntu(开机时按Shift)选择其他内核版本
-#### 2、禁用nouveau驱动
+#### 10.1.1 1、Advanced options for Ubuntu(开机时按Shift)选择其他内核版本
+#### 10.1.2 2、禁用nouveau驱动
 ```shell
 sudo gedit /etc/modprobe.d/blacklist.conf #确认最后一行添加：blacklist nouveau
 sudo update-initramfs -u -k all
 sudo reboot
 ```
-#### 3、重装显卡驱动
+#### 10.1.3 3、重装显卡驱动
