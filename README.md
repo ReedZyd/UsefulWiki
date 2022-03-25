@@ -70,7 +70,7 @@ http://www.c-nergy.be/products.html
 没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-#### Ubuntu 18.04：
+#### Ubuntu 18.04 (2 Methods)：
 ##### No.1（Recommended）
 reference：https://blog.csdn.net/fancyboyhou/article/details/105170696
 ```shell
