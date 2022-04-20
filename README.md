@@ -1,6 +1,6 @@
 # Quick start: configuration of a new computer in VsisLab
 
-## 1 System installation
+# 1 System installation
 ### 1.1 Start
 
 镜像源：https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/16.04/
@@ -12,6 +12,13 @@ ps：最好上官网下载
 
 
 ### 1.2 Disk Partition
+images from the process of ubuntu 20.04 installation 
+reboot and keep pressing `del`/`F2`, then set Boot Priority then F10
+you have do not make ... yes
+
+select ubuntu - install ubuntu
+keyboard - English 
+Minial installation - no other options (pull out network line)
 choose: `something else`
 eg (500G+2T):
 > 512M efi \
@@ -20,14 +27,40 @@ eg (500G+2T):
 > 2T /home 
 
 如果没有efi选项，更换进入系统时选择的启动位置
+where are you? shanghai
+set user name / system name, then install
+
+complete install - restart now
+remove the installation medium, then press enter
+insert networkline
 进入空系统后分辨率过低是正常现象，是由于未安装驱动所致。
 
 
+# configuration
+##
+sudo apt-get install vim gedit
+## replace apt source
+
+### 6.2 apt换源
+```shell
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo gedit /etc/apt/sources.list
+```
+按系统版本替换内容： aliyun recommanded
+https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
+更新升级
+
+```shell
+sudo apt update
+sudo apt upgrade
+```
 
 ## 2 ssh & remote-desktop
 ### 2.1 ssh
 
 ```shell
+sudo apt-get update
+sudo apt-get upgrade
 sudo apt install openssh-server
 sudo service ssh start
 sudo service ssh status
@@ -323,19 +356,6 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip config set global.index-url  http://mirrors.aliyun.com/pypi/simple/
 ```
 
-### 6.2 apt换源
-```shell
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo gedit /etc/apt/sources.list
-```
-按系统版本替换内容：
-https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
-更新升级
-
-```shell
-sudo apt update
-sudo apt upgrade
-```
 
 ### 6.3 docker换源
 修改/etc/docker/daemon.json并重启docker
