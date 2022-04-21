@@ -168,9 +168,18 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 ```
 https://pytorch.org/get-started/locally/
 https://pytorch.org/get-started/previous-versions/
+recommanded configurations:
+- ubuntu 20.04, i10 3090, cuda11.3 torch 1.11.0
+
+
 ### Cuda、驱动推荐安装方式
 #### Cuda 驱动一键安装（推荐）
-1、在官网下载需要版本的Cuda文件（*.run）
+1、在官网下载需要版本的Cuda文件（*.run） if you want a previous version, search nvidia cuda + {version id} directly and enter the page belonging to nvidia.
+```shell
+wget https://developer.download.nvidia.com/compute/cuda/11.3.0/local_installers/cuda_11.3.0_465.19.01_linux.run
+# do not run the next line!!!
+# sudo sh cuda_11.3.0_465.19.01_linux.run
+```
 2、禁用nouveau第三方驱动
 
 `sudo gedit /etc/modprobe.d/blacklist.conf`
