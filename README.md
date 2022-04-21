@@ -1,4 +1,4 @@
-# Quick Start in VsisLab -- How to Configure a New Computer?
+# Quick Start in VsisLab -- How to Configure a New Computer? (20220422 update)
 
 ## System installation
 ### 制作系统盘
@@ -34,131 +34,6 @@
 
 
 ## configuration
-## replace apt source
-
-### apt换源
-```shell
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo gedit /etc/apt/sources.list
-```
-按系统版本替换内容： aliyun recommanded
-https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
-更新升级
-
-```shell
-sudo apt update
-sudo apt upgrade
-``` 
-
-### Install basic tools
-```shell
-sudo apt-get install vim gedit 
-sudo apt-get install net-tools # ubuntu 20.04
-```
-### Install ssh
-```shell
-sudo apt install openssh-server
-sudo service ssh start
-sudo service ssh status
-```
-
-## network
-分为两步
-- 端口转发：如果是新机器需要设置端口转发，如果是老机器路由器不重置就不需要重新设置。
-- 设置静态ip
-### 端口转发
-- 在路由器管理界面 找端口转发设置
-	- eg: hiwifi.com 互联网-超级端口转发
-- 通常需要设置两个端口，一个是ssh端口，另一个是xrdp端口
-	- ssh default port 22
-	- xrdp default port 3389
-
-
-### Configure static IP
-- please check your system version
-#### Ubuntu16.04
-- 1、查询网络接口的名字
-打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
-- 2、打开修改文件
-	`sudo vim /etc/network/interfaces`
-	添加：
-```
-	auto enp5s0 # 使用的网络接口，之前查询接口是为了这里  
-	iface enp5s0 inet static # enp5s0这个接口，使用静态ip设置  
-	address 192.168.199.105 # 设置ip地址  
-	netmask 255.255.255.0 # 设置子网掩码  
-	network 192.168.199.255
-	gateway 192.168.199.1 # 设置网关  
-	dns-nameservers 114.114.114.114 # 设置dns服务器地址
-```
-- 3、sudo reboot
-#### Ubuntu 18.04+
-- reference: https://qizhanming.com/blog/2021/03/18/how-to-config-static-ip-on-ubuntu-20-04
-- obtain gateway: `sudo apt-get install net-tools`，`route -e`
-- `sudo vim /etc/netplan/*.yaml`
-```
-network:
-	ethernets:
-		enp5s0: # 配置的网卡名称,使用ifconfig查看
-			addresses: [192.168.1.113/24] # 设置IP及掩码
-			gateway4: 192.168.1.1 # 设置网关
-			nameservers:
-				addresses: [114.114.114.114, 8.8.8.8] # 设置DNS
-	version: 2
-```
-`sudo netplan apply` (re-try)
-`sudo systemctl restart NetworkManager`
-`ping 192.168.1.113`
-`ping 114.114.114.114`
-
-
-### remote-desktop: xrdp
-#### Ubuntu 16.04/20.04:
-```shell
-sudo apt-get install xrdp xfce4  #安装xrdp 
-sudo vim /etc/xrdp/startwm.sh
-# 把最下面的test和exec两行注释掉，添加一行xfce4-session
-# 以上操作相当于给每个用户echo xfce4-session >~/.xsession
-sudo service xrdp restart
-sudo reboot # ubuntu 20.04 no need
-```
-全灰屏，鼠标是个叉，可能是因为xrdp版本低，参考：
-https://netdevops.me/2017/installing-xrdp-0.9.1-on-ubuntu-16.04-xenial/
-
-vscode通过xrdp远程桌面打开在远程桌面显示，参考：
-https://github.com/Microsoft/vscode/issues/3451#issuecomment-227197582
-```shell
-mkdir ~/lib # make a copy of the relevant library
-cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 ~/lib
-sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
-LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
-```
-
-##### 一些问题
-http://www.c-nergy.be/products.html
-
-没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
-没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
-
-#### Ubuntu 18.04:
-reference:
-- https://blog.csdn.net/fancyboyhou/article/details/105170696
-- https://c-nergy.be/products.html
-```shell
-wget http://c-nergy.be/downloads/xRDP/xrdp-installer-1.3.zip
-unzip xrdp-installer-1.3.zip
-sudo chmod 777 ./xrdp-installer-1.3.sh 
-./xrdp-installer-1.3.sh 
-```
-
-1、如已经安装过XRDP，请先删除后再执行安装脚本。
-```shell
-./xrdp-installer-1.3.sh -r # 删除xrdp软件包
-```
-
-2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
-
-
 ## 安装Cuda、Cudnn、英伟达驱动
 
 
@@ -169,7 +44,7 @@ pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f ht
 https://pytorch.org/get-started/locally/
 https://pytorch.org/get-started/previous-versions/
 recommanded configurations:
-- ubuntu 20.04, i10 3090, cuda11.3 torch 1.11.0
+- ubuntu 20.04, 5900x 3090, cuda11.3 driver 470 torch 1.11.0
 
 
 ### Cuda、驱动推荐安装方式
@@ -356,6 +231,130 @@ find / -name cudnn_version.h 2>&1 | grep -v "Permission denied" # 查找cudnn_ve
 cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # 路径需要替换为上述命令搜索到的文件路径
 ```
 
+### apt换源 (optional)
+```shell
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo gedit /etc/apt/sources.list
+```
+按系统版本替换内容： aliyun recommanded
+https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
+更新升级
+
+```shell
+sudo apt update
+sudo apt upgrade
+``` 
+
+### Install basic tools
+```shell
+sudo apt-get install vim gedit 
+sudo apt-get install net-tools # ubuntu 20.04
+```
+### Install ssh
+```shell
+sudo apt install openssh-server
+sudo service ssh start
+sudo service ssh status
+```
+
+## network
+分为两步
+- 端口转发：如果是新机器需要设置端口转发，如果是老机器路由器不重置就不需要重新设置。
+- 设置静态ip
+### 端口转发
+- 在路由器管理界面 找端口转发设置
+	- eg: hiwifi.com 互联网-超级端口转发
+- 通常需要设置两个端口，一个是ssh端口，另一个是xrdp端口
+	- ssh default port 22
+	- xrdp default port 3389
+
+
+### Configure static IP
+- please check your system version
+#### Ubuntu16.04
+- 1、查询网络接口的名字
+打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
+- 2、打开修改文件
+	`sudo vim /etc/network/interfaces`
+	添加：
+```
+	auto enp5s0 # 使用的网络接口，之前查询接口是为了这里  
+	iface enp5s0 inet static # enp5s0这个接口，使用静态ip设置  
+	address 192.168.199.105 # 设置ip地址  
+	netmask 255.255.255.0 # 设置子网掩码  
+	network 192.168.199.255
+	gateway 192.168.199.1 # 设置网关  
+	dns-nameservers 114.114.114.114 # 设置dns服务器地址
+```
+- 3、sudo reboot
+#### Ubuntu 18.04+
+- reference: https://qizhanming.com/blog/2021/03/18/how-to-config-static-ip-on-ubuntu-20-04
+- obtain gateway: `sudo apt-get install net-tools`，`route -e`
+- `sudo vim /etc/netplan/*.yaml`
+```
+network:
+	ethernets:
+		enp5s0: # 配置的网卡名称,使用ifconfig查看
+			addresses: [192.168.1.113/24] # 设置IP及掩码
+			gateway4: 192.168.1.1 # 设置网关
+			nameservers:
+				addresses: [114.114.114.114, 8.8.8.8] # 设置DNS
+	version: 2
+```
+`sudo netplan apply` (re-try)
+`sudo systemctl restart NetworkManager`
+`ping 192.168.1.113`
+`ping 114.114.114.114`
+
+
+### remote-desktop: xrdp
+#### Ubuntu 16.04/20.04:
+```shell
+sudo apt-get install xrdp xfce4  #安装xrdp 
+sudo vim /etc/xrdp/startwm.sh
+# 把最下面的test和exec两行注释掉，添加一行xfce4-session
+# 以上操作相当于给每个用户echo xfce4-session >~/.xsession
+sudo service xrdp restart
+sudo reboot # ubuntu 20.04 no need
+```
+全灰屏，鼠标是个叉，可能是因为xrdp版本低，参考：
+https://netdevops.me/2017/installing-xrdp-0.9.1-on-ubuntu-16.04-xenial/
+
+vscode通过xrdp远程桌面打开在远程桌面显示，参考：
+https://github.com/Microsoft/vscode/issues/3451#issuecomment-227197582
+```shell
+mkdir ~/lib # make a copy of the relevant library
+cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 ~/lib
+sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' ~/lib/libxcb.so.1
+LD_LIBRARY_PATH=$HOME/lib code # set the dynamic loader path to put your library first before executing VS Code
+```
+
+##### 一些问题
+http://www.c-nergy.be/products.html
+
+没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
+没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
+
+#### Ubuntu 18.04:
+reference:
+- https://blog.csdn.net/fancyboyhou/article/details/105170696
+- https://c-nergy.be/products.html
+```shell
+wget http://c-nergy.be/downloads/xRDP/xrdp-installer-1.3.zip
+unzip xrdp-installer-1.3.zip
+sudo chmod 777 ./xrdp-installer-1.3.sh 
+./xrdp-installer-1.3.sh 
+```
+
+1、如已经安装过XRDP，请先删除后再执行安装脚本。
+```shell
+./xrdp-installer-1.3.sh -r # 删除xrdp软件包
+```
+
+2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
+
+
+
 
 ## 添加用户
 ### 添加新用户
@@ -406,12 +405,15 @@ vim /etc/fstab
 
 ## 其他安装（可选）
 ### 安装anaconda3（导入设置）
+guanwang
+sh {ANACONDA_FILE} yes | enter | yes
 #### 配置
 ```shell
 echo 'export PATH="~/anaconda3/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
-
+### ROS 
+http://wiki.ros.org/noetic/Installation/Ubuntu
 ### 配置tmux、vim
 
 ```shell
