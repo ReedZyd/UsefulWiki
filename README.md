@@ -38,7 +38,7 @@ insert networkline
 
 # configuration
 ##
-sudo apt-get install vim gedit
+sudo apt-get install vim gedit net-tools
 ## replace apt source
 
 ### 6.2 apt换源
@@ -59,12 +59,51 @@ sudo apt upgrade
 ### 2.1 ssh
 
 ```shell
-sudo apt-get update
-sudo apt-get upgrade
 sudo apt install openssh-server
 sudo service ssh start
 sudo service ssh status
 ```
+### 3.2 设置静态ip
+#### 3.2.1 Ubuntu16.04
+- 1、查询网络接口的名字
+打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
+- 2、打开修改文件
+	`sudo vim /etc/network/interfaces`
+	添加：
+	> auto enp5s0 # 使用的网络接口，之前查询接口是为了这里  
+	> iface enp5s0 inet static // enp5s0这个接口，使用静态ip设置  
+	> address 192.168.199.105 // 设置ip地址  
+	> netmask 255.255.255.0 // 设置子网掩码  
+	> network 192.168.199.255
+	> gateway 192.168.199.1 // 设置网关  
+	> dns-nameservers 114.114.114.114 // 设置dns服务器地址
+- 3、sudo reboot
+#### 3.2.2 Ubuntu 18.04+
+https://qizhanming.com/blog/2021/03/18/how-to-config-static-ip-on-ubuntu-20-04
+obtain gateway: sudo apt-get install net-tools
+route -e
+`sudo vim /etc/netplan/*.yaml`
+```
+network:
+	ethernets:
+		enp5s0: #配置的网卡名称,使用ifconfig查看
+			addresses: [192.168.199.105/24] #设置IP及掩码
+			gateway4: 192.168.199.1 #设置网关
+			nameservers:
+				addresses: [114.114.114.114, 8.8.8.8] #设置DNS
+	version: 2
+```
+`sudo netplan apply` (re-try)
+sudo reboot
+### 3.3 固件错误Possible missing firmware解决: 
+#### 3.3.1 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/
+#### 3.3.2 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
+```shell
+cd /lib/firmware/rtl_nic/
+sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/rtl8125a-3.fw
+```
+
 
 ### 2.2 remote-desktop: xrdp
 #### 2.2.1 Ubuntu 16.04：
@@ -124,43 +163,6 @@ sudo chmod 777 ./xrdp-installer-1.1.sh
 	- ssh default port 22
 	- xrdp default port 3389
 
-### 3.2 设置静态ip
-#### 3.2.1 Ubuntu16.04
-- 1、查询网络接口的名字
-打开命令行，输入`ifconfig`,第一行最左边的名字，就是本机的网络接口，如enp5s0 
-- 2、打开修改文件
-	`sudo vim /etc/network/interfaces`
-	添加：
-	> auto enp5s0 # 使用的网络接口，之前查询接口是为了这里  
-	> iface enp5s0 inet static // enp5s0这个接口，使用静态ip设置  
-	> address 192.168.199.105 // 设置ip地址  
-	> netmask 255.255.255.0 // 设置子网掩码  
-	> network 192.168.199.255
-	> gateway 192.168.199.1 // 设置网关  
-	> dns-nameservers 114.114.114.114 // 设置dns服务器地址
-- 3、sudo reboot
-#### 3.2.2 Ubuntu18.04
-`sudo vim /etc/netplan/*.yaml`
-```
-network:
-	ethernets:
-		enp5s0: #配置的网卡名称,使用ifconfig查看
-			addresses: [192.168.199.105/24] #设置IP及掩码
-			gateway4: 192.168.199.1 #设置网关
-			nameservers:
-				addresses: [114.114.114.114, 8.8.8.8] #设置DNS
-	version: 2
-```
-`sudo netplan apply`
-
-### 3.3 固件错误Possible missing firmware解决: 
-#### 3.3.1 1、进入如下这个地址，固件文件非常全面，找到适合自己的版本
-https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/
-#### 3.3.2 2、切换到刚才报缺少固件的目录，下载对应的文件内容，
-```shell
-cd /lib/firmware/rtl_nic/
-sudo wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/rtl8125a-3.fw
-```
 ## 4 安装Cuda、Cudnn、英伟达驱动
 
 注意⚠️ 3090只支持455及以上驱动，建议使用pytorch时安装cuda11.0，455驱动。
