@@ -173,7 +173,15 @@ recommanded configurations:
 
 
 ### Cuda、驱动推荐安装方式
-#### Cuda 驱动一键安装（推荐）
+### driver: additional driver（推荐）
+### cuda
+1、在官网下载需要版本的Cuda文件（*.run） if you want a previous version, search nvidia cuda + {version id} directly and enter the page belonging to nvidia.
+```shell
+wget https://developer.download.nvidia.com/compute/cuda/11.3.0/local_installers/cuda_11.3.0_465.19.01_linux.run
+sudo sh cuda_11.3.0_465.19.01_linux.run
+```
+
+### Cuda 驱动一键安装
 1、在官网下载需要版本的Cuda文件（*.run） if you want a previous version, search nvidia cuda + {version id} directly and enter the page belonging to nvidia.
 ```shell
 wget https://developer.download.nvidia.com/compute/cuda/11.3.0/local_installers/cuda_11.3.0_465.19.01_linux.run
@@ -191,7 +199,7 @@ sudo update-initramfs -u # 对所有内核版本操作 加 -k all
 sudo reboot
 ```
 
-3、进入命令行界面并禁用图形界面
+3、进入命令行界面(ctrl alt f1)并禁用图形界面
 
 执行命令：lsmod | grep nouveau 查看是否禁用,无反应则已禁用
 禁用图形界面：
@@ -207,9 +215,9 @@ sudo service lightdm stop # 关闭桌面
 sudo systemctl set-default multi-user.target # 关闭桌面
 ```
 
-4、18.04系统运行*.run文件前可能需要运行sudo apt-get install build-essential命令以安装gcc、g++、make等软件 
+4、sudo apt-get install build-essential # 安装gcc、g++、make等软件 
 
-5、运行.run文件，选择安装Cuda、驱动等（Sample、Demo、Document不需要安装）
+5、运行.run文件，选择accept eula安装Cuda、驱动等（Sample、Demo、Document不需要安装）
 6、重启图形界面
 
 开启图形界面
