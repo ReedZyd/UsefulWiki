@@ -1,4 +1,4 @@
-# Quick start in VsisLab -- How to Configure a new computer?
+# Quick Start in VsisLab -- How to Configure a New Computer?
 
 ## System installation
 ### 制作系统盘
