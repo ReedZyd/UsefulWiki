@@ -34,6 +34,22 @@
 
 
 ## configuration
+## replace apt source
+
+### apt换源
+```shell
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo gedit /etc/apt/sources.list
+```
+按系统版本替换内容： aliyun recommanded
+https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
+更新升级
+
+```shell
+sudo apt update
+sudo apt upgrade
+``` 
+
 ### Install basic tools
 ```shell
 sudo apt-get install vim gedit 
@@ -45,6 +61,19 @@ sudo apt install openssh-server
 sudo service ssh start
 sudo service ssh status
 ```
+
+## network
+分为两步
+- 端口转发：如果是新机器需要设置端口转发，如果是老机器路由器不重置就不需要重新设置。
+- 设置静态ip
+### 端口转发
+- 在路由器管理界面 找端口转发设置
+	- eg: hiwifi.com 互联网-超级端口转发
+- 通常需要设置两个端口，一个是ssh端口，另一个是xrdp端口
+	- ssh default port 22
+	- xrdp default port 3389
+
+
 ### Configure static IP
 - please check your system version
 #### Ubuntu16.04
@@ -71,40 +100,27 @@ sudo service ssh status
 network:
 	ethernets:
 		enp5s0: # 配置的网卡名称,使用ifconfig查看
-			addresses: [192.168.199.105/24] # 设置IP及掩码
-			gateway4: 192.168.199.1 # 设置网关
+			addresses: [192.168.1.113/24] # 设置IP及掩码
+			gateway4: 192.168.1.1 # 设置网关
 			nameservers:
 				addresses: [114.114.114.114, 8.8.8.8] # 设置DNS
 	version: 2
 ```
 `sudo netplan apply` (re-try)
-`sudo reboot`
+`sudo systemctl restart NetworkManager`
+`ping 192.168.1.113`
+`ping 114.114.114.114`
 
-## replace apt source
 
-### apt换源
-```shell
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo gedit /etc/apt/sources.list
-```
-按系统版本替换内容： aliyun recommanded
-https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/l,
-更新升级
-
-```shell
-sudo apt update
-sudo apt upgrade
-``` 
 ### remote-desktop: xrdp
-#### Ubuntu 16.04：
+#### Ubuntu 16.04/20.04:
 ```shell
 sudo apt-get install xrdp xfce4  #安装xrdp 
-sudo apt-get install xubuntu-desktop -f #安装xubuntu-desktop
 sudo vim /etc/xrdp/startwm.sh
 # 把最下面的test和exec两行注释掉，添加一行xfce4-session
 # 以上操作相当于给每个用户echo xfce4-session >~/.xsession
 sudo service xrdp restart
-sudo reboot
+sudo reboot # ubuntu 20.04 no need
 ```
 全灰屏，鼠标是个叉，可能是因为xrdp版本低，参考：
 https://netdevops.me/2017/installing-xrdp-0.9.1-on-ubuntu-16.04-xenial/
@@ -124,73 +140,35 @@ http://www.c-nergy.be/products.html
 没有共享剪切板：版本低（官方Ubuntu16.04的源里只有0.6.1-2的版本）
 没有菜单栏、tab补全等：https://www.cnblogs.com/defineconst/p/10254613.html
 
-#### Ubuntu 18.04：
+#### Ubuntu 18.04:
 reference:
 - https://blog.csdn.net/fancyboyhou/article/details/105170696
 - https://c-nergy.be/products.html
 ```shell
-wget http://www.c-nergy.be/downloads/xrdp-installer-1.1.zip
-unzip xrdp-installer-1.1.zip
-sudo chmod 777 ./xrdp-installer-1.1.sh 
-./xrdp-installer-1.1.sh 
+wget http://c-nergy.be/downloads/xRDP/xrdp-installer-1.3.zip
+unzip xrdp-installer-1.3.zip
+sudo chmod 777 ./xrdp-installer-1.3.sh 
+./xrdp-installer-1.3.sh 
 ```
 
 1、如已经安装过XRDP，请先删除后再执行安装脚本。
 ```shell
-./xrdp-installer-1.1.sh -r # 删除xrdp软件包
+./xrdp-installer-1.3.sh -r # 删除xrdp软件包
 ```
 
 2、有时候会出现：用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
 
-## network
-分为两步
-- 端口转发：如果是新机器需要设置端口转发，如果是老机器路由器不重置就不需要重新设置。
-- 设置静态ip
-### 端口转发
-- 在路由器管理界面 找端口转发设置
-	- eg: hiwifi.com 互联网-超级端口转发
-- 通常需要设置两个端口，一个是ssh端口，另一个是xrdp端口
-	- ssh default port 22
-	- xrdp default port 3389
 
 ## 安装Cuda、Cudnn、英伟达驱动
 
-注意⚠️ 3090只支持455及以上驱动，建议使用pytorch时安装cuda11.0，455驱动。
+
+注意⚠️ 3090只支持455及以上驱动，建议使用pytorch时安装cuda11.0，455驱动。please refer to for more details.
 ```shell
 pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
 ```
-
+https://pytorch.org/get-started/locally/
+https://pytorch.org/get-started/previous-versions/
 ### Cuda、驱动推荐安装方式
-
-#### 快速安装驱动：重启后驱动掉了
-1、禁用图形界面
-
-```bash
-sudo service lightdm stop # 关闭桌面 
-
-```
-
-或（未装桌面管理器时）：
-
-```bash
-sudo systemctl set-default multi-user.target # 关闭桌面
-```
-
-2、运行.run文件，选择安装驱动等（Sample、Demo、Document不需要安装）
-3、重启图形界面
-
-开启图形界面
-
-```bash
-sudo service lightdm start # 开启桌面
-```
-
-或（未装桌面管理器时）：
-
-```bash
-sudo systemctl set-default graphical.target # 开启桌面
-```
-
 #### Cuda 驱动一键安装（推荐）
 1、在官网下载需要版本的Cuda文件（*.run）
 2、禁用nouveau第三方驱动
@@ -251,6 +229,37 @@ source ~/.bashrc
 
 如果安装不上：[https://blog.csdn.net/missyoudaisy/article/details/104432746](https://blog.csdn.net/missyoudaisy/article/details/104432746)
 
+
+#### 快速安装驱动：重启后驱动掉了
+1、禁用图形界面
+
+```bash
+sudo service lightdm stop # 关闭桌面 
+
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default multi-user.target # 关闭桌面
+```
+
+2、运行.run文件，选择安装驱动等（Sample、Demo、Document不需要安装）
+3、重启图形界面
+
+开启图形界面
+
+```bash
+sudo service lightdm start # 开启桌面
+```
+
+或（未装桌面管理器时）：
+
+```bash
+sudo systemctl set-default graphical.target # 开启桌面
+```
+
+
 #### 其它安装（不推荐，只作参考）
 ##### 驱动安装
 ###### 1、禁用nouveau第三方驱动
@@ -304,6 +313,12 @@ export CUDA_HOME=/usr/local/cuda
 ```shell
 source ~/.bashrc
 ```
+
+
+
+
+
+
 ### 安装Cudnn10.0
 有时候需要改名： solitairetheme8-->tgz
 ```shell
