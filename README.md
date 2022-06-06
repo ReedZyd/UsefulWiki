@@ -262,8 +262,9 @@ sudo service ssh status
 - 端口转发：如果是新机器需要设置端口转发，如果是老机器路由器不重置就不需要重新设置。
 - 设置静态ip
 ### 端口转发
-- 在路由器管理界面 找端口转发设置
+- 在路由器管理界面 (ip) 找端口转发设置
 	- eg: hiwifi.com 互联网-超级端口转发
+	- xiaomi 高级设置 端口转发
 - 通常需要设置两个端口，一个是ssh端口，另一个是xrdp端口
 	- ssh default port 22
 	- xrdp default port 3389
